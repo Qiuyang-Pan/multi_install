@@ -15,6 +15,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(766, 480)
+        Form.setAcceptDrops(True)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtWidgets.QLabel(Form)
@@ -52,6 +53,7 @@ class Ui_Form(object):
         self.filePath.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
         self.filePath.setLineWrapMode(QtWidgets.QPlainTextEdit.NoWrap)
         self.filePath.setReadOnly(True)
+        self.filePath.setPlaceholderText("请选择要安装的APK文件，可拖拽APK到窗口获取路径！")
         self.filePath.setObjectName("filePath")
         self.horizontalLayout_4.addWidget(self.filePath)
         self.openFileBtn = QtWidgets.QPushButton(self.selectApk)

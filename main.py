@@ -4,7 +4,7 @@ import sys
 import threading
 
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.QtGui import QStandardItemModel, QStandardItem, QDragEnterEvent, QDropEvent
 from PyQt5.QtWidgets import QApplication, QMessageBox, QWidget, QFileDialog
 from multi_install import *
 from concurrent.futures import ThreadPoolExecutor
@@ -37,6 +37,28 @@ class MultiInstall(QWidget, Ui_Form):
         self.model = QStandardItemModel()
         self.model.setHorizontalHeaderLabels(["device_id", "device_name"])
         self.tableView.setModel(self.model)
+
+    def dragEnterEvent(self, event: QDragEnterEvent):
+        # 当拖拽进入窗口时调用
+        if event.mimeData().hasUrls():  # 检查是否有URLs
+            event.acceptProposedAction()  # 接受拖拽动作
+
+    def dropEvent(self, event: QDropEvent):
+        # 当释放拖拽动作时调用
+        if event.mimeData().hasUrls():
+            print("拖拽文件")
+            event.setDropAction(Qt.CopyAction)  # 设置拖拽动作为复制
+            event.accept()
+            # 获取文件路径
+            urls = event.mimeData().urls()
+            if len(urls) > 1:
+                QMessageBox.warning(self, "警告", "一次只能拖拽一个文件！")
+                return
+            if urls[0].scheme() == 'file':
+                file_path = urls[0].toLocalFile()  # 获取本地文件路径
+                # print(file_path)
+                self.filePath.setPlainText(file_path)
+
 
     def show_devices(self):
         self.init_table()
