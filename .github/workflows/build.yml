@@ -1,1 +1,32 @@
+name: Build and Package PyQt5 Project
 
+on:
+  workflow_dispatch:  # 手动触发工作流
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip 
+        pip install -r requirements.txt
+
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller --noconfirm --onefile --windowed --name "multi_install"  main.py
+        # 这里假设你的脚本名为your_script.py，你需要根据实际情况替换
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: packaged-application
+        path: dist/your_executable_name  # 上传打包后的可执行文件，根据实际路径修改
