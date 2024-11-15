@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -15,17 +15,22 @@ jobs:
       with:
         python-version: '3.9'
 
+    - name: Create and activate virtual environment
+      run: |
+        python -m venv venv
+        .\venv\Scripts\Activate.ps1  # 在Windows上激活虚拟环境
+
     - name: Install dependencies
       run: |
-        pip install --upgrade pip 
+        pip install --upgrade pip
         pip install -r requirements.txt
 
     - name: Build with PyInstaller
       run: |
-        pyinstaller --noconfirm --onefile --windowed main.py
+        pyinstaller --noconfirm --onefile --windowed --name "multi_install" main.py
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
         name: packaged-application
-        path: dist/main  # 上传打包后的可执行文件，根据实际路径修改
+        path: dist/multi_install.exe  # 上传打包后的可执行文件，根据实际路径修改
