@@ -22,7 +22,7 @@ jobs:
 
     - name: Build with PyInstaller
       run: |
-        pyinstaller --noconfirm --onefile --windowed --name "multi_install"  main.py
+        pyinstaller --noconfirm --onefile --windowed main.py
         # 这里假设你的脚本名为your_script.py，你需要根据实际情况替换
 
     - name: Upload Artifact
