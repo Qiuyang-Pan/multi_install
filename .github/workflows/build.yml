@@ -23,10 +23,9 @@ jobs:
     - name: Build with PyInstaller
       run: |
         pyinstaller --noconfirm --onefile --windowed main.py
-        # 这里假设你的脚本名为your_script.py，你需要根据实际情况替换
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
         name: packaged-application
-        path: dist/multi_install  # 上传打包后的可执行文件，根据实际路径修改
+        path: dist/main  # 上传打包后的可执行文件，根据实际路径修改
