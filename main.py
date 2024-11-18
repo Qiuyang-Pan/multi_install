@@ -57,6 +57,7 @@ class MultiInstall(QWidget, Ui_Form):
             if urls[0].scheme() == 'file':
                 file_path = urls[0].toLocalFile()  # 获取本地文件路径
                 # print(file_path)
+                self.apk = file_path
                 self.filePath.setPlainText(file_path)
 
 
